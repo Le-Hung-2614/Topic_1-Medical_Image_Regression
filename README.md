@@ -1,6 +1,6 @@
 # Topic_1-Medical-Image-Regression
 
-## Medical_Image_Regression/
+Medical_Image_Regression/
 │
 ├── data/                        # Chứa dữ liệu (Metadata)
 │   ├── raw/                     # Dữ liệu thô (tải từ link) - KHÔNG UPLOAD ẢNH LÊN GIT
@@ -34,4 +34,4 @@
 │   └── logs.txt                 # File log ghi lại quá trình train
 │
 ├── requirements.txt             # Các thư viện cần thiết (torch, pandas, numpy, scikit-learn...)
-└── README.md                    # Hướng dẫn cách chạy code cho giáo viên/bạn bè
+└── README.md                    
