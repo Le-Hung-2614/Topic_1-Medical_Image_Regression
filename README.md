@@ -50,33 +50,38 @@ Mô hình đạt được kết quả khả quan trên tập Test độc lập:
 
 > **Nhận xét:** Với khối u thực tế 16.9 mm, mô hình dự đoán 15.8 mm (Lệch 1.2mm). Đây là mức sai số chấp nhận được trong sàng lọc sơ bộ.
 
-## 📂 Cấu trúc Thư mục (Project Structure)
+## 📁 Cấu trúc Thư mục (Project Structure)
+
+```
 Topic-1-Medical_Image_Regression/
 │
-├── data/ # Thư mục chứa dữ liệu (không public)
-│ ├── raw/ # Dữ liệu gốc (chưa xử lý)
-│ │ ├── images/ # Ảnh X-ray / CT gốc
-│ │ ├── BBox_List_2017.csv # Thông tin bounding box khối u
-│ │ └── Data_Entry_2017_v2020.csv # Metadata (nhãn, thông tin ảnh)
-│ │
-│ └── processed/ # Dữ liệu sau tiền xử lý
-│ ├── train.csv # Tập huấn luyện
-│ ├── val.csv # Tập validation
-│ └── test.csv # Tập kiểm tra
+├── data/                         # Thư mục chứa dữ liệu 
+│   ├── raw/                      # Dữ liệu gốc (chưa xử lý)
+│   │   ├── images/               # Ảnh X-ray / CT gốc ( 112020 ảnh nên hãy tự tải)
+│   │   ├── BBox_List_2017.csv    # Thông tin bounding box khối u
+│   │   └── Data_Entry_2017_v2020.csv  # Metadata (nhãn, thông tin ảnh)
+│   │
+│   └── processed/                # Dữ liệu sau tiền xử lý
+│       ├── train.csv             # Tập huấn luyện
+│       ├── val.csv               # Tập validation
+│       └── test.csv              # Tập kiểm tra
 │
-├── history/ # Lịch sử huấn luyện mô hình
-│ ├── history_mae.pkl # Loss MAE theo epoch
-│ ├── history_mse.pkl # Loss MSE theo epoch
-│ └── history_no_aug.pkl # History khi không dùng augmentation
+├── history/                      # Lịch sử huấn luyện mô hình
+│   ├── history_mae.pkl           # Loss MAE theo epoch
+│   ├── history_mse.pkl           # Loss MSE theo epoch
+│   └── history_no_aug.pkl        # History khi không dùng augmentation
 │
-├── saved_models/ # Các mô hình đã train
-│ ├── tumor_model.pth # Model cơ bản
-│ ├── tumor_model_mae.pth # Model tối ưu theo MAE (Best Model)
-│ ├── tumor_model_mse.pth # Model tối ưu theo MSE
-│ ├── tumor_model_noaug.pth # Model không dùng augmentation
-│ └── temp_best_ablation.pth # Model cho thí nghiệm ablation
+├── saved_models/                 # Các mô hình đã train
+│   ├── tumor_model.pth
+│   ├── tumor_model_mae.pth       # Best Model (MAE)
+│   ├── tumor_model_mse.pth
+│   ├── tumor_model_noaug.pth
+│   └── temp_best_ablation.pth
 │
-├── medical-image-tumor-size-predict.ipynb # file notebook dự án
-├── requirements.txt # Danh sách thư viện cần cài đặt
-├── README.md # Tài liệu mô tả dự án
-└── .gitignore # Loại trừ file/thư mục khi push Git
+├── images/                       # Ảnh minh họa kết quả
+│
+├── medical-image-tumor-size-predict.ipynb
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
