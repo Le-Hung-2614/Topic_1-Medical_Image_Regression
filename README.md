@@ -80,7 +80,8 @@ Topic-1-Medical_Image_Regression/
 │
 ├── images/                       # Ảnh minh họa kết quả
 │
-├── medical-image-tumor-size-predict.ipynb
+├── medical-image-tumor-size-predict.ipynb # File chạy trên Visual Studio Code
+├── medical-image-tumor-size-predict-Kaggle.ipynb # File chạy trên Kaggle
 ├── requirements.txt
 ├── README.md
 └── .gitignore
