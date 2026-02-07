@@ -1,0 +1,29 @@
+# ---Python & Virtual Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+.venv/
+cols/
+
+
+# --- Datasets & Images ---
+# Bỏ qua các file ảnh X-quang
+*.jpg
+*.jpeg
+*.png
+*.dcm
+*.dicom
+
+
+
+# ---  IDE Settings  ---
+.vscode/
+.idea/
+*.swp
+
+# ---  OS Generated Files ---
+.DS_Store
+Thumbs.db
