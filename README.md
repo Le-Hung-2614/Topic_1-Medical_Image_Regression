@@ -9,7 +9,7 @@
 Dự án này tập trung giải quyết bài toán **Hồi quy (Regression)** trong y tế: Dự đoán chính xác đường kính khối u (đơn vị mm) từ ảnh chụp X-quang lồng ngực. Thay vì chỉ phân loại (có bệnh/không bệnh), mô hình cung cấp thông tin định lượng để hỗ trợ bác sĩ chẩn đoán mức độ nghiêm trọng.
 
 **Thách thức:**
-- Dữ liệu hạn chế (Small Dataset ~115 ảnh).
+- Dữ liệu hạn chế (Small Dataset ~164 ảnh).
 - Sự mất cân bằng dữ liệu (Data Imbalance) giữa các kích thước u.
 - Nhiễu ảnh y tế và sự đa dạng về vị trí/hình dạng khối u.
 
@@ -30,7 +30,7 @@ Sử dụng **ResNet18** làm xương sống (Backbone) với chiến lược **
 
 ### 3. Huấn luyện (Training Strategy)
 - **Fine-tuning:** Unfreeze toàn bộ các lớp (Full Unfreeze) để mô hình học lại các đặc trưng y tế mức thấp.
-- **Optimizer:** Adam với Learning Rate nhỏ ($1e-5$) và Weight Decay ($1e-3$) để chống Overfitting.
+- **Optimizer:** Adam với Learning Rate nhỏ ($1e-5$) và Weight Decay ($1e-4$) để chống Overfitting.
 - **Scheduler:** ReduceLROnPlateau.
 
 ## 📊 Kết quả Thực nghiệm (Experimental Results)
@@ -39,33 +39,44 @@ Mô hình đạt được kết quả khả quan trên tập Test độc lập:
 
 | Metric | Giá trị | Ý nghĩa |
 | :--- | :--- | :--- |
-| **MAE (Mean Absolute Error)** | **8.44 mm** | Sai số trung bình tuyệt đối |
-| **MPAE (Mean % Error)** | **~25%** | Sai số phần trăm trung bình |
-| **RMSE (Root Mean Sq. Error)** | 11.2 mm | Độ lệch chuẩn của sai số |
+| **MAE (Mean Absolute Error)** | **10 mm** | Sai số trung bình tuyệt đối |
+| **MAPE (Mean % Error)** | **~44.03%** | Sai số phần trăm trung bình |
+| **RMSE (Root Mean Sq. Error)** | 16.37 mm | Độ lệch chuẩn của sai số |
 
 ### Demo Dự đoán
 *(Kết quả trực quan trên một ca bệnh cụ thể)*
 
-![Prediction Demo](images/demo_prediction.png)
+![Prediction Demo](images/predict_image.JPG)
 
-> **Nhận xét:** Với khối u thực tế 15.3mm, mô hình dự đoán 11.7mm (Lệch 3.6mm). Đây là mức sai số chấp nhận được trong sàng lọc sơ bộ.
-
-## 📈 Phân tích Biểu đồ (Analysis)
-
-### 1. Biểu đồ Loss (Train vs Val)
-Cho thấy mô hình hội tụ tốt, không bị Overfitting nặng nhờ Dropout và Data Augmentation.
-![Loss Chart](images/loss_chart.png)
-
-### 2. Biểu đồ Tương quan (Scatter Plot)
-Mô hình dự đoán tốt các khối u kích thước nhỏ và trung bình (< 40mm). Các khối u quá lớn (Outliers) có xu hướng bị dự đoán thấp hơn thực tế.
-![Scatter Plot](images/scatter_plot.png)
+> **Nhận xét:** Với khối u thực tế 16.9 mm, mô hình dự đoán 15.8 mm (Lệch 1.2mm). Đây là mức sai số chấp nhận được trong sàng lọc sơ bộ.
 
 ## 📂 Cấu trúc Thư mục (Project Structure)
-├── data/ # Thư mục chứa dữ liệu (Không public) 
-├── models/ # Chứa file trọng số (.pth) │ 
-├── tumor_model_mae.pth # Best Model 
-├── notebooks/ # Jupyter Notebooks phân tích & train 
-├── images/ # Hình ảnh kết quả để hiển thị README 
-├── requirements.txt # Các thư viện cần thiết 
-├── train.py # Script huấn luyện chính 
-├── evaluate.py # Script đánh giá kiểm thử └── README.md # Tài liệu dự án
+Topic-1-Medical_Image_Regression/
+│
+├── data/ # Thư mục chứa dữ liệu (không public)
+│ ├── raw/ # Dữ liệu gốc (chưa xử lý)
+│ │ ├── images/ # Ảnh X-ray / CT gốc
+│ │ ├── BBox_List_2017.csv # Thông tin bounding box khối u
+│ │ └── Data_Entry_2017_v2020.csv # Metadata (nhãn, thông tin ảnh)
+│ │
+│ └── processed/ # Dữ liệu sau tiền xử lý
+│ ├── train.csv # Tập huấn luyện
+│ ├── val.csv # Tập validation
+│ └── test.csv # Tập kiểm tra
+│
+├── history/ # Lịch sử huấn luyện mô hình
+│ ├── history_mae.pkl # Loss MAE theo epoch
+│ ├── history_mse.pkl # Loss MSE theo epoch
+│ └── history_no_aug.pkl # History khi không dùng augmentation
+│
+├── saved_models/ # Các mô hình đã train
+│ ├── tumor_model.pth # Model cơ bản
+│ ├── tumor_model_mae.pth # Model tối ưu theo MAE (Best Model)
+│ ├── tumor_model_mse.pth # Model tối ưu theo MSE
+│ ├── tumor_model_noaug.pth # Model không dùng augmentation
+│ └── temp_best_ablation.pth # Model cho thí nghiệm ablation
+│
+├── medical-image-tumor-size-predict.ipynb # file notebook dự án
+├── requirements.txt # Danh sách thư viện cần cài đặt
+├── README.md # Tài liệu mô tả dự án
+└── .gitignore # Loại trừ file/thư mục khi push Git
